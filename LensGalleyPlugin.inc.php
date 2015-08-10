@@ -35,34 +35,21 @@ class LensGalleyPlugin extends ViewableFilePlugin {
 	 * @see ViewableFilePlugin::displayArticleGalley
 	 */
 	function displayArticleGalley($templateMgr, $request, $params) {
-		$journal = $request->getJournal();
-		if (!$journal) return '';
-
-		$fileId = (isset($params['fileId']) && is_numeric($params['fileId'])) ? (int) $params['fileId'] : null;
-		if (!$fileId) {
-			// unfortunate, but occasionally browsers upload PDF files as application/octet-stream.
-			// Even setting the file type in the display template will not cause a correct render in this case.
-			// So, update the file type if this is the case.
-			$galley = $templateMgr->get_template_vars('galley'); // set in ArticleHandler
-			$file = $galley->getFirstGalleyFile('pdf');
-			if (!preg_match('/\.pdf$/', $file->getFileType())) {
-				$file->setFileType('application/pdf');
-				$submissionFileDao = DAORegistry::getDAO('SubmissionFileDAO');
-				$submissionFileDao->updateObject($file);
-			}
-		}
-		$templateMgr->assign('pluginJSPath', $this->getJSPath($request));
-
+		$templateMgr->assign('pluginLensPath', $this->getLensPath($request));
+		$galley = $templateMgr->get_template_vars('galley');
+		$galleyFiles = $galley->getLatestGalleyFiles();
+		assert(count($galleyFiles)==1);
+		$templateMgr->assign('firstGalleyFile', array_shift($galleyFiles));
 		return parent::displayArticleGalley($templateMgr, $request, $params);
 	}
 
 	/**
-	 * returns the base path for JS included in this plugin.
+	 * returns the base path for Lens JS included in this plugin.
 	 * @param $request PKPRequest
 	 * @return string
 	 */
-	function getJSPath($request) {
-		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js';
+	function getLensPath($request) {
+		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/lib/lens';
 	}
 }
 

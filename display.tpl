@@ -8,13 +8,23 @@
  * Embedded viewing of a PDF galley.
  *}
 {if $galley}
-	<script src="{$pluginJSPath}/lib/lens/index.js"></script>
-	{url|assign:"xmlUrl" op="viewFile" path=$articleId|to_array:$galley->getBestGalleyId($currentJournal) escape=false}
+	<script src="{$pluginLensPath}/lens.js"></script>
+	{url|assign:"xmlUrl" op="download" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal):$firstGalleyFile->getId() escape=false}
 
 	<script type="text/javascript">{literal}
+
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		linkElement.href = "{/literal}{$pluginLensPath|escape:"javascript"}{literal}/lens.css"; //Replace here
+
+		document.head.appendChild(linkElement);
+
 		$(document).ready(function(){
 			var app = new Lens({
-				document_url: "{/literal}{$pdfUrl|escape:'javascript'}{literal}"
+				document_url: "{/literal}{$xmlUrl|escape:'javascript'}{literal}"
 			});
+			app.start();
+			window.app = app;
+		});
 	{/literal}</script>
 {/if}
