@@ -17,6 +17,14 @@ import('classes.plugins.ViewableFilePlugin');
 
 class LensGalleyPlugin extends ViewableFilePlugin {
 	/**
+	 * Install default settings on journal creation.
+	 * @return string
+	 */
+	function getContextSpecificPluginSettingsFile() {
+		return $this->getPluginPath() . '/settings.xml';
+	}
+
+	/**
 	 * Get the display name of this plugin.
 	 * @return String
 	 */
