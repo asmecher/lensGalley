@@ -12,6 +12,6 @@
   -->
 
 <locale name="en_US" full_name="U.S. English">
-	<message key="plugins.viewableFiles.lensGalley.displayName">eLife Lens Lens Article Viewer</message>
+	<message key="plugins.viewableFiles.lensGalley.displayName">eLife Lens Article Viewer</message>
 	<message key="plugins.viewableFiles.lensGalley.description">This plugin provides rendering support for JATS XML galleys using eLife Lens.</message>
 </locale>
