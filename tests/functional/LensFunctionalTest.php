@@ -77,19 +77,34 @@ class LensFunctionalTest extends ContentBaseTestCase {
 		));
 
 		$this->logOut();
+
+		// Expedite the submission
 		$this->findSubmissionAsEditor('dbarnes', null, $title);
 		$this->waitForElementPresent($selector = 'css=[id^=expedite-button-]');
-		$this->click($selector);
-		$this->waitForElementPresent($selector='link=OK');
-		$this->click($selector);
-		$this->waitForElementPresent($selector = 'css=[id^=issueEntry-button-]');
-		$this->click($selector);
-		$this->waitForElementPresent($selector = '//a[@name=\'catalog\']');
 		$this->click($selector);
 		$this->waitForElementPresent($selector = 'id=issueId');
 		$this->select($selector, 'Vol 1 No 1 (2014)');
 		$this->waitForElementPresent($selector = '//button[text()=\'Save\']');
 		$this->click($selector);
+		$this->waitJQuery();
+
+		// Plugin management
+		$this->waitForElementPresent($selector='link=Website');
+		$this->clickAndWait($selector);
+		$this->click('link=Plugins');
+
+		// Find and enable the plugin
+		$this->waitForElementPresent($selector = '//input[@id=\'select-cell-lensgalleyplugin-enabled\']');
+		$this->click($selector); // Enable plugin
+		$this->waitJQuery();
+
+		// View the associated issue
+		$this->clickAndWait('link=View Site');
+		$this->clickAndWait('link=Archives');
+		$this->clickAndWait('link=Vol 1 No 1 (2014)');
+
+		
+
 		$this->logOut();
 	}
 }
