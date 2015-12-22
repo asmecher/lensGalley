@@ -7,11 +7,11 @@
  *
  * Embedded viewing of a PDF galley.
  *}
-{include file="common/frontend/header.tpl" pageTitleTranslated=$issue->getIssueSeries()|escape}
+{include file="frontend/components/header.tpl" pageTitleTranslated=$issue->getIssueSeries()|escape}
 
 <div class="page">
 	{url|assign:"xmlUrl" op="download" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal):$firstGalleyFile->getId() escape=false}
 	{include file="$pluginTemplatePath/display.tpl" xmlUrl=$xmlUrl}
 </div>
 
-{include file="common/frontend/footer.tpl"}
+{include file="frontend/components/footer.tpl"}
