@@ -48,7 +48,7 @@ class LensFunctionalTest extends ContentBaseTestCase {
 		$this->click('link=Plugins');
 
 		// Find and enable the plugin
-		$this->waitForElementPresent($selector = '//input[@id=\'select-cell-lensgalleyplugin-enabled\']');
+		$this->waitForElementPresent($selector = '//input[starts-with(@id,\'select-cell-lensgalleyplugin-enabled\')]');
 		$this->click($selector); // Enable plugin
 		$this->waitJQuery();
 
@@ -57,7 +57,7 @@ class LensFunctionalTest extends ContentBaseTestCase {
 		$this->clickAndWait('link=Archives');
 		$this->clickAndWait('link=Vol 1 No 3 (2014)');
 
-		
+
 
 		$this->logOut();
 	}
