@@ -59,7 +59,7 @@
         </revision>
       </submission_file>
       <article_galley xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" approved="true" galley_type="pdfarticlegalleyplugin" xsi:schemaLocation="http://pkp.sfu.ca native.xsd">
-        <name locale="en_US">PDF</name>
+        <name locale="en_US">XML</name>
         <seq>0</seq>
         <submission_file_ref id="48" revision="1"/>
       </article_galley>
