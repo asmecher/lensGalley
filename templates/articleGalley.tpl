@@ -1,5 +1,5 @@
 {**
- * plugins/viewableFiles/lensGalley/articleGalley.tpl
+ * plugins/generic/lensGalley/articleGalley.tpl
  *
  * Copyright (c) 2014-2016 Simon Fraser University Library
  * Copyright (c) 2003-2016 John Willinsky
@@ -10,7 +10,7 @@
 {include file="frontend/components/header.tpl" pageTitleTranslated=$issue->getIssueSeries()|escape}
 
 <div class="page">
-	{url|assign:"xmlUrl" op="download" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal):$firstGalleyFile->getId() escape=false}
+	{url|assign:"xmlUrl" op="download" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal) escape=false}
 	{include file="$pluginTemplatePath/display.tpl" xmlUrl=$xmlUrl}
 </div>
 

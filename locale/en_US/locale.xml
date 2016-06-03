@@ -2,7 +2,7 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * plugins/viewableFiles/lensGalley/locale/en_US/locale.xml
+  * plugins/generic/lensGalley/locale/en_US/locale.xml
   *
   * Copyright (c) 2014-2016 Simon Fraser University Library
   * Copyright (c) 2003-2016 John Willinsky
@@ -12,6 +12,6 @@
   -->
 
 <locale name="en_US" full_name="U.S. English">
-	<message key="plugins.viewableFiles.lensGalley.displayName">eLife Lens Article Viewer</message>
-	<message key="plugins.viewableFiles.lensGalley.description">This plugin provides rendering support for JATS XML galleys using eLife Lens.</message>
+	<message key="plugins.generic.lensGalley.displayName">eLife Lens Article Viewer</message>
+	<message key="plugins.generic.lensGalley.description">This plugin provides rendering support for JATS XML galleys using eLife Lens.</message>
 </locale>

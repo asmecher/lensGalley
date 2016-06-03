@@ -1,21 +1,38 @@
 <?php
 
 /**
- * @file plugins/viewableFiles/lensGalley/LensGalleyPlugin.inc.php
+ * @file plugins/generic/lensGalley/LensGalleyPlugin.inc.php
  *
  * Copyright (c) 2014-2016 Simon Fraser University Library
  * Copyright (c) 2003-2016 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LensGalleyPlugin
- * @ingroup plugins_viewableFiles_lensGalley
+ * @ingroup plugins_generic_lensGalley
  *
  * @brief Class for LensGalley plugin
  */
 
-import('classes.plugins.ViewableFilePlugin');
+import('lib.pkp.classes.plugins.GenericPlugin');
 
-class LensGalleyPlugin extends ViewableFilePlugin {
+class LensGalleyPlugin extends GenericPlugin {
+	/**
+	 * Register the plugin, if enabled
+	 * @param $category string
+	 * @param $path string
+	 * @return boolean
+	 */
+	function register($category, $path) {
+		if (parent::register($category, $path)) {
+			if ($this->getEnabled()) {
+				HookRegistry::register('ArticleHandler::view::galley', array($this, 'articleCallback'));
+				HookRegistry::register('IssueHandler::view::galley', array($this, 'issueCallback'));
+			}
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Install default settings on journal creation.
 	 * @return string
@@ -29,55 +46,72 @@ class LensGalleyPlugin extends ViewableFilePlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.viewableFiles.lensGalley.displayName');
+		return __('plugins.generic.lensGalley.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.viewableFiles.lensGalley.description');
+		return __('plugins.generic.lensGalley.description');
 	}
 
 	/**
-	 * Determine whether this plugin can handle the specified content.
-	 * @param $galley ArticleGalley|IssueGalley
-	 * @return boolean True iff the plugin can handle the content
+	 * Callback that renders the article galley.
+	 * @param $hookName string
+	 * @param $args array
+	 * @return boolean
 	 */
-	function canHandle($galley) {
-		if (is_a($galley, 'ArticleGalley') && $galley->getGalleyType() == $this->getName()) {
-			return true;
-		} elseif (is_a($galley, 'IssueGalley') && $galley->getFileType() == 'application/xml') {
+	function articleCallback($hookName, $args) {
+		$request =& $args[0];
+		$issue =& $args[1];
+		$galley =& $args[2];
+		$article =& $args[3];
+
+		$templateMgr = TemplateManager::getManager($request);
+		if ($galley && $galley->getFileType() == 'application/xml') {
+			$templateMgr->assign(array(
+				'pluginLensPath' => $this->getLensPath($request),
+				'pluginTemplatePath' => $this->getTemplatePath(),
+				'pluginUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath(),
+				'galleyFile' => $galley->getFile(),
+				'issue' => $issue,
+				'article' => $article,
+				'galley' => $galley,
+			));
+			$templateMgr->display($this->getTemplatePath() . '/articleGalley.tpl');
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
-	 * @see ViewableFilePlugin::displayArticleGalley
+	 * Callback that renders the issue galley.
+	 * @param $hookName string
+	 * @param $args array
+	 * @return boolean
 	 */
-	function displayArticleGalley($request, $issue, $article, $galley) {
-		$templateMgr = TemplateManager::getManager($request);
-		$galleyFiles = $galley->getLatestGalleyFiles();
-		assert(count($galleyFiles)==1);
-		$templateMgr->assign(array(
-			'pluginLensPath' => $this->getLensPath($request),
-			'firstGalleyFile' => array_shift($galleyFiles),
-			'pluginTemplatePath' => $this->getTemplatePath(),
-		));
-		return parent::displayArticleGalley($request, $issue, $article, $galley);
-	}
+	function issueCallback($hookName, $args) {
+		$request =& $args[0];
+		$issue =& $args[1];
+		$galley =& $args[2];
 
-	/**
-	 * @see ViewableFilePlugin::displayArticleGalley
-	 */
-	function displayIssueGalley($request, $issue, $galley) {
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign(array(
-			'pluginLensPath' => $this->getLensPath($request),
-			'pluginTemplatePath' => $this->getTemplatePath(),
-		));
-		return parent::displayIssueGalley($request, $issue, $galley);
+		if ($galley && $galley->getFileType() == 'application/xml') {
+			$templateMgr->assign(array(
+				'pluginLensPath' => $this->getLensPath($request),
+				'pluginTemplatePath' => $this->getTemplatePath(),
+				'pluginUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath(),
+				'galleyFile' => $galley->getFile(),
+				'issue' => $issue,
+				'galley' => $galley,
+			));
+			$templateMgr->display($this->getTemplatePath() . '/issueGalley.tpl');
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
