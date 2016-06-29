@@ -42,22 +42,18 @@ class LensFunctionalTest extends ContentBaseTestCase {
 		// Ensure that the import was listed as completed.
 		$this->waitForElementPresent('//*[contains(text(),\'The import completed successfully.\')]//li[contains(text(),\'Vol 1 No 3\')]');
 
-		// Plugin management
-		$this->waitForElementPresent($selector='link=Website');
-		$this->clickAndWait($selector);
-		$this->click('link=Plugins');
-
-		// Find and enable the plugin
-		$this->waitForElementPresent($selector = '//input[starts-with(@id,\'select-cell-lensgalleyplugin-enabled\')]');
-		$this->click($selector); // Enable plugin
-		$this->waitJQuery();
-
 		// View the associated issue
-		$this->clickAndWait('link=View Site');
+		$this->waitForElementPresent($selector='link=View Site');
+		$this->clickAndWait($selector);
 		$this->clickAndWait('link=Archives');
 		$this->clickAndWait('link=Vol 1 No 3 (2014)');
 
+		// Find the published XML galley
+		$this->waitForElementPresent($selector='link=XML');
+		$this->click($selector);
 
+		// Ensure the article was rendered
+		$this->waitForElementPresent('//span[contains(@class,\'title\') and contains(text(), \'Direct single molecule measurement of TCR triggering by agonist pMHC in living primary T cells\')]');
 
 		$this->logOut();
 	}
