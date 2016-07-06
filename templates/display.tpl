@@ -7,6 +7,7 @@
  *
  * Embedded viewing of a PDF galley.
  *}
+<script src="{$jQueryUrl}"></script>
 <script src="{$pluginLensPath}/lens.js"></script>
 <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/javascript">{literal}
