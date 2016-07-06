@@ -78,7 +78,7 @@ class LensGalleyPlugin extends GenericPlugin {
 				'issue' => $issue,
 				'article' => $article,
 				'galley' => $galley,
-				'jQueryUrl' => $this->_getJQueryUrl(),
+				'jQueryUrl' => $this->_getJQueryUrl($request),
 			));
 			$templateMgr->display($this->getTemplatePath() . '/articleGalley.tpl');
 			return true;
@@ -107,7 +107,7 @@ class LensGalleyPlugin extends GenericPlugin {
 				'galleyFile' => $galley->getFile(),
 				'issue' => $issue,
 				'galley' => $galley,
-				'jQueryUrl' => $this->_getJQueryUrl(),
+				'jQueryUrl' => $this->_getJQueryUrl($request),
 			));
 			$templateMgr->addJavaScript(
 				'jquery',
@@ -126,14 +126,15 @@ class LensGalleyPlugin extends GenericPlugin {
 
 	/**
 	 * Get the URL for JQuery JS.
+	 * @param $request PKPRequest
 	 * @return string
 	 */
-	private function _getJQueryUrl() {
+	private function _getJQueryUrl($request) {
 		$min = Config::getVar('general', 'enable_minified') ? '.min' : '';
 		if (Config::getVar('general', 'enable_cdn')) {
 			return '//ajax.googleapis.com/ajax/libs/jquery/' . CDN_JQUERY_VERSION . '/jquery' . $min . '.js';
 		} else {
-			return $this->_request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jquery/jquery' . $min . '.js';
+			return $request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jquery/jquery' . $min . '.js';
 		}
 	}
 
