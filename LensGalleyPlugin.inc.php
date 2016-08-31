@@ -134,7 +134,7 @@ class LensGalleyPlugin extends GenericPlugin {
 		if (Config::getVar('general', 'enable_cdn')) {
 			return '//ajax.googleapis.com/ajax/libs/jquery/' . CDN_JQUERY_VERSION . '/jquery' . $min . '.js';
 		} else {
-			return $request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jquery/jquery' . $min . '.js';
+			return $request->getBaseUrl() . '/lib/pkp/lib/vendor/jquery/jquery' . $min . '.js';
 		}
 	}
 
