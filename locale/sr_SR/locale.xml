@@ -11,7 +11,7 @@
   * Localization strings.
   -->
 
-<locale name="en_US" full_name="U.S. English">
+<locale name="sr_SR" full_name="Српски">
 	<message key="plugins.generic.lensGalley.displayName">eLife Lens Article Viewer</message>
 	<message key="plugins.generic.lensGalley.description">Овај додатак омогућује рендеровање за JATS XML фајлове чланака коришћењем eLife Lens.</message>
 </locale>
