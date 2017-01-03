@@ -12,6 +12,6 @@
   -->
 
 <locale name="ru_RU" full_name="Русский">
-	<message key="plugins.generic.lensGalley.displayName">Просмотр статей eLife Lens</message>
+	<message key="plugins.generic.lensGalley.displayName">Модуль «Просмотр статей eLife Lens»</message>
 	<message key="plugins.generic.lensGalley.description">Обеспечивает поддержку отображения для гранок JATS XML используя eLife Lens.</message>
 </locale>
