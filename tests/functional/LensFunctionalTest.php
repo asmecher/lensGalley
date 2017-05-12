@@ -53,7 +53,7 @@ class LensFunctionalTest extends ContentBaseTestCase {
 		$this->click($selector);
 
 		// Ensure the article was rendered
-		$this->waitForElementPresent('//span[contains(@class,\'title\') and contains(text(), \'Direct single molecule measurement of TCR triggering by agonist pMHC in living primary T cells\')]');
+		$this->waitForElementPresent('//div[contains(@class,\'title\') and contains(text(), \'Direct single molecule measurement of TCR triggering by agonist pMHC in living primary T cells\')]');
 
 		$this->logOut();
 	}
