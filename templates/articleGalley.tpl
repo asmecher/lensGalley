@@ -5,7 +5,7 @@
  * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * Embedded viewing of a PDF galley.
+ * Embedded viewing of a JATS XML galley.
  *}
 {include file="frontend/components/header.tpl" pageTitleTranslated=$article->getLocalizedTitle()|escape}
 
