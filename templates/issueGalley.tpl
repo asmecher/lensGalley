@@ -10,7 +10,7 @@
 {include file="frontend/components/header.tpl" pageTitleTranslated=$issue->getIssueSeries()|escape}
 
 <div class="page">
-	{url|assign:"xmlUrl" op="download" path=$issue->getBestIssueId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal) escape=false}
+	{capture assign="xmlUrl"}{url op="download" path=$issue->getBestIssueId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal) escape=false}{/capture}
 	{include file="$pluginTemplatePath/display.tpl" xmlUrl=$xmlUrl}
 </div>
 
