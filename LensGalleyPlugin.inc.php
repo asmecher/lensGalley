@@ -17,14 +17,11 @@ import('lib.pkp.classes.plugins.GenericPlugin');
 
 class LensGalleyPlugin extends GenericPlugin {
 	/**
-	 * Register the plugin, if enabled
-	 * @param $category string
-	 * @param $path string
-	 * @return boolean
+	 * @copydoc Plugin::register()
 	 */
-	function register($category, $path) {
-		if (parent::register($category, $path)) {
-			if ($this->getEnabled()) {
+	function register($category, $path, $mainContextId = null) {
+		if (parent::register($category, $path, $mainContextId)) {
+			if ($this->getEnabled($mainContextId)) {
 				HookRegistry::register('ArticleHandler::view::galley', array($this, 'articleCallback'));
 				HookRegistry::register('IssueHandler::view::galley', array($this, 'issueCallback'));
 				HookRegistry::register('ArticleHandler::download', array($this, 'articleDownloadCallback'), HOOK_SEQUENCE_LATE);
@@ -36,23 +33,21 @@ class LensGalleyPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Install default settings on journal creation.
-	 * @return string
+	 * @copydoc Plugin::getContextSpecificPluginSettingsFile()
 	 */
 	function getContextSpecificPluginSettingsFile() {
 		return $this->getPluginPath() . '/settings.xml';
 	}
 
 	/**
-	 * Get the display name of this plugin.
-	 * @return String
+	 * @copydoc Plugin::getDisplayName()
 	 */
 	function getDisplayName() {
 		return __('plugins.generic.lensGalley.displayName');
 	}
 
 	/**
-	 * Get a description of the plugin.
+	 * @copydoc Plugin::getDescription()
 	 */
 	function getDescription() {
 		return __('plugins.generic.lensGalley.description');
