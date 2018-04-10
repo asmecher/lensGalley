@@ -22,8 +22,8 @@ class LensGalleyPlugin extends GenericPlugin {
 	 * @param $path string
 	 * @return boolean
 	 */
-	function register($category, $path) {
-		if (parent::register($category, $path)) {
+	function register($category, $path, $mainContextId = null) {
+		if (parent::register($category, $path, $mainContextId)) {
 			if ($this->getEnabled()) {
 				HookRegistry::register('ArticleHandler::view::galley', array($this, 'articleCallback'));
 				HookRegistry::register('IssueHandler::view::galley', array($this, 'issueCallback'));
