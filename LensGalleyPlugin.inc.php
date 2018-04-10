@@ -17,10 +17,7 @@ import('lib.pkp.classes.plugins.GenericPlugin');
 
 class LensGalleyPlugin extends GenericPlugin {
 	/**
-	 * Register the plugin, if enabled
-	 * @param $category string
-	 * @param $path string
-	 * @return boolean
+	 * @copydoc LazyLoadPlugin::register()
 	 */
 	function register($category, $path, $mainContextId = null) {
 		if (parent::register($category, $path, $mainContextId)) {
