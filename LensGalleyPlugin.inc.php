@@ -25,7 +25,6 @@ class LensGalleyPlugin extends GenericPlugin {
 				HookRegistry::register('ArticleHandler::view::galley', array($this, 'articleCallback'));
 				HookRegistry::register('IssueHandler::view::galley', array($this, 'issueCallback'));
 				HookRegistry::register('ArticleHandler::download', array($this, 'articleDownloadCallback'), HOOK_SEQUENCE_LATE);
-				$this->_registerTemplateResource();
 			}
 			return true;
 		}
@@ -144,13 +143,6 @@ class LensGalleyPlugin extends GenericPlugin {
 	 */
 	function getLensPath($request) {
 		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/lib/lens';
-	}
-
-	/**
-	 * @copydoc Plugin::getTemplatePath()
-	 */
-	function getTemplatePath($inCore = false) {
-		return $this->getTemplateResourceName() . ':templates/';
 	}
 
 	/**
