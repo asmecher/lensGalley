@@ -23,29 +23,29 @@
       <abstract locale="en_US">&lt;p&gt;T cells discriminate between self and foreign antigenic peptides, displayed on antigen presenting cell surfaces, via the TCR. While the molecular interactions between TCR and its ligands are well characterized in vitro, quantitative measurements of these interactions in living cells are required to accurately resolve the physical mechanisms of TCR signaling. We report direct single molecule measurements of TCR triggering by agonist pMHC in hybrid junctions between live primary T cells and supported lipid membranes. Every pMHC:TCR complex over the entire cell is tracked while simultaneously monitoring the local membrane recruitment of ZAP70, as a readout of TCR triggering. Mean dwell times for pMHC:TCR molecular binding of 5 and 54 s were measured for two different pMHC:TCR systems. Single molecule measurements of the pMHC:TCR:ZAP70 complex indicate that TCR triggering is stoichiometric with agonist pMHC in a 1:1 ratio. Thus any signal amplification must occur downstream of TCR triggering.&lt;/p&gt;</abstract>
       <authors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pkp.sfu.ca native.xsd">
         <author primary_contact="true" include_in_browse="true" user_group_ref="Author">
-          <firstname>Geoff</firstname>
-          <lastname>O'Donoghue</lastname>
+          <givenname locale="en_US">Geoff</givenname>
+          <familyname locale="en_US">O'Donoghue</familyname>
           <affiliation locale="en_US">University of California, Berkeley</affiliation>
           <country>US</country>
           <email>godoghue@mailinator.com</email>
         </author>
         <author include_in_browse="true" user_group_ref="Author">
-          <firstname>Rafal</firstname>
-          <lastname>Pielak</lastname>
+          <givenname locale="en_US">Rafal</givenname>
+          <familyname locale="en_US">Pielak</familyname>
           <affiliation locale="en_US">University of California, Berkeley</affiliation>
           <country>US</country>
           <email>rpielak@mailinator.com</email>
         </author>
         <author include_in_browse="true" user_group_ref="Author">
-          <firstname>Alexander</firstname>
-          <lastname>Smoligovets</lastname>
+          <givenname locale="en_US">Alexander</givenname>
+          <familyname locale="en_US">Smoligovets</familyname>
           <affiliation locale="en_US">University of California, Berkeley</affiliation>
           <country>US</country>
           <email>asmoligovets@mailinator.com</email>
         </author>
         <author include_in_browse="true" user_group_ref="Author">
-          <firstname>Jenny</firstname>
-          <lastname>Lin</lastname>
+          <givenname locale="en_US">Jenny</givenname>
+          <familyname locale="en_US">Lin</familyname>
           <affiliation locale="en_US">University of California, Berkeley</affiliation>
           <country>US</country>
           <email>jlin@mailinator.com</email>
