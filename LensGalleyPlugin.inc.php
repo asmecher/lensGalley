@@ -70,7 +70,7 @@ class LensGalleyPlugin extends GenericPlugin {
 		if ($galley && in_array($galley->getFileType(), array('application/xml', 'text/xml'))) {
 			$templateMgr->assign(array(
 				'pluginLensPath' => $this->getLensPath($request),
-				'pluginTemplatePath' => $this->getTemplatePath(),
+				'displayTemplatePath' => $this->getTemplateResource('display.tpl'),
 				'pluginUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath(),
 				'galleyFile' => $galley->getFile(),
 				'issue' => $issue,
@@ -78,7 +78,7 @@ class LensGalleyPlugin extends GenericPlugin {
 				'galley' => $galley,
 				'jQueryUrl' => $this->_getJQueryUrl($request),
 			));
-			$templateMgr->display($this->getTemplatePath() . '/articleGalley.tpl');
+			$templateMgr->display($this->getTemplateResource('articleGalley.tpl'));
 			return true;
 		}
 
@@ -100,7 +100,7 @@ class LensGalleyPlugin extends GenericPlugin {
 		if ($galley && $galley->getFileType() == 'application/xml') {
 			$templateMgr->assign(array(
 				'pluginLensPath' => $this->getLensPath($request),
-				'pluginTemplatePath' => $this->getTemplatePath(),
+				'displayTemplatePath' => $this->getTemplateResource('display.tpl'),
 				'pluginUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath(),
 				'galleyFile' => $galley->getFile(),
 				'issue' => $issue,
@@ -115,7 +115,7 @@ class LensGalleyPlugin extends GenericPlugin {
 					'contexts' => 'frontend',
 				)
 			);
-			$templateMgr->display($this->getTemplatePath() . '/issueGalley.tpl');
+			$templateMgr->display($this->getTemplateResource('issueGalley.tpl'));
 			return true;
 		}
 
