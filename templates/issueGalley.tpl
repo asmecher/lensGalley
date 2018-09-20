@@ -7,7 +7,7 @@
  *
  * Embedded viewing of a JATS XML galley.
  *}
-{include file="frontend/components/header.tpl" pageTitleTranslated=$issue->getIssueSeries()|escape}
+{include file="frontend/components/header.tpl" pageTitleTranslated=$issue->getIssueIdentification()|escape}
 
 <div class="page">
 	{capture assign="xmlUrl"}{url op="download" path=$issue->getBestIssueId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal) escape=false}{/capture}
