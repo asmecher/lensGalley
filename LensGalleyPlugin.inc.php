@@ -304,7 +304,7 @@ class LensGalleyPlugin extends GenericPlugin {
 				$journal = $request->getJournal();
 				import ('classes.file.PublicFileManager');
 				$publicFileManager = new PublicFileManager();
-				$url = $request->getBaseUrl() . '/' . $publicFileManager->getJournalFilesPath($journal->getId()) . '/' . implode('/', $urlParts) . ($anchor?'#' . $anchor:'');
+				$url = $request->getBaseUrl() . '/' . $publicFileManager->getContextFilesPath($journal->getId()) . '/' . implode('/', $urlParts) . ($anchor?'#' . $anchor:'');
 				break;
 		}
 		return $matchArray[1] . $url . $matchArray[3];
