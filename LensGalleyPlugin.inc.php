@@ -154,7 +154,7 @@ class LensGalleyPlugin extends GenericPlugin {
 		$article =& $args[0];
 		$galley =& $args[1];
 		$fileId =& $args[2];
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 
 		if ($galley && $galley->getFileType() == 'application/xml' && $galley->getFileId() == $fileId) {
 			if (!HookRegistry::call('LensGalleyPlugin::articleDownload', array($article,  &$galley, &$fileId))) {
@@ -239,7 +239,7 @@ class LensGalleyPlugin extends GenericPlugin {
 	}
 
 	function _handleOjsUrl($matchArray) {
-		$request = Application::getRequest();
+		$request = Application::get()->getRequest();
 		$url = $matchArray[2];
 		$anchor = null;
 		if (($i = strpos($url, '#')) !== false) {
