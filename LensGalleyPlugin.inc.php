@@ -97,7 +97,7 @@ class LensGalleyPlugin extends GenericPlugin {
 		$galley =& $args[2];
 
 		$templateMgr = TemplateManager::getManager($request);
-		if ($galley && $galley->getFileType() == 'application/xml') {
+		if ($galley && in_array($galley->getFileType(), array('application/xml', 'text/xml'))) {
 			$templateMgr->assign(array(
 				'pluginLensPath' => $this->getLensPath($request),
 				'displayTemplatePath' => $this->getTemplateResource('display.tpl'),
@@ -156,7 +156,7 @@ class LensGalleyPlugin extends GenericPlugin {
 		$fileId =& $args[2];
 		$request = Application::get()->getRequest();
 
-		if ($galley && $galley->getFileType() == 'application/xml' && $galley->getFileId() == $fileId) {
+		if ($galley && in_array($galley->getFileType(), array('application/xml', 'text/xml')) && $galley->getFileId() == $fileId) {
 			if (!HookRegistry::call('LensGalleyPlugin::articleDownload', array($article,  &$galley, &$fileId))) {
 				$xmlContents = $this->_getXMLContents($request, $galley);
 				header('Content-Type: application/xml');
