@@ -64,17 +64,27 @@ class LensGalleyPlugin extends GenericPlugin {
 		$request =& $args[0];
 		$issue =& $args[1];
 		$galley =& $args[2];
-		$article =& $args[3];
+		$submission =& $args[3];
 
 		$templateMgr = TemplateManager::getManager($request);
 		if ($galley && in_array($galley->getFileType(), array('application/xml', 'text/xml'))) {
+			$galleyPublication = null;
+			foreach ($submission->getData('publications') as $publication) {
+				if ($publication->getId() === $galley->getData('publicationId')) {
+					$galleyPublication = $publication;
+					break;
+				}
+			}
 			$templateMgr->assign(array(
 				'pluginLensPath' => $this->getLensPath($request),
 				'displayTemplatePath' => $this->getTemplateResource('display.tpl'),
 				'pluginUrl' => $request->getBaseUrl() . '/' . $this->getPluginPath(),
 				'galleyFile' => $galley->getFile(),
 				'issue' => $issue,
-				'article' => $article,
+				'article' => $submission,
+				'bestId' => $submission->getBestId(),
+				'isLatestPublication' => $submission->getData('currentPublicationId') === $galley->getData('publicationId'),
+				'galleyPublication' => $galleyPublication,
 				'galley' => $galley,
 				'jQueryUrl' => $this->_getJQueryUrl($request),
 			));
@@ -230,7 +240,7 @@ class LensGalleyPlugin extends GenericPlugin {
 			'issueTitle' => $issue?$issue->getIssueIdentification():__('editor.article.scheduleForPublication.toBeAssigned'),
 			'journalTitle' => $journal->getLocalizedName(),
 			'siteTitle' => $site->getLocalizedTitle(),
-			'currentUrl' => $request->getRequestUrl()
+			'currentUrl' => $request->getRequestUrl(),
 		);
 
 		foreach ($paramArray as $key => $value) {

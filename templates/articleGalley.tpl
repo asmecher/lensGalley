@@ -10,7 +10,13 @@
 {include file="frontend/components/header.tpl" pageTitleTranslated=$article->getLocalizedTitle()|escape}
 
 <div class="page">
-	{capture assign="xmlUrl"}{url op="download" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getBestGalleyId($currentJournal) escape=false}{/capture}
+	{capture assign="xmlUrl"}{strip}
+		{if $isLatestPublication}
+			{url op="download" path=$bestId|to_array:$galley->getBestGalleyId($currentJournal):$galleyFile->getId() escape=false}
+		{else}
+			{url op="download" path=$bestId|to_array:'version':$galleyPublication->getId():$galley->getBestGalleyId($currentJournal):$galleyFile->getId() escape=false}
+		{/if}
+	{/strip}{/capture}
 	{include file=$displayTemplatePath xmlUrl=$xmlUrl}
 </div>
 
