@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-06-03 15:58+0000\n"
+"PO-Revision-Date: 2020-06-06 02:30+0000\n"
 "Last-Translator: Diego José Macêdo <diegojmacedo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <http://translate.pkp.sfu.ca/projects/"
 "plugins/lens-galley-plugin/pt_BR/>\n"
@@ -13,8 +13,8 @@ msgstr ""
 
 msgid "plugins.generic.lensGalley.description"
 msgstr ""
-"Este plugin fornece suporte de renderização para galerias JATS XML usando o "
-"eLife Lens."
+"Este plugin fornece suporte de renderização para composições no formato JATS "
+"XML usando o eLife Lens."
 
 msgid "plugins.generic.lensGalley.displayName"
 msgstr "Visualizador de artigos do eLife Lens"
