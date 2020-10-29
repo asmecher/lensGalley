@@ -220,6 +220,7 @@ class LensGalleyPlugin extends GenericPlugin {
 				'\1="' . $fileUrl . '"',
 				$contents
 			);
+			if ($contents === null) error_log('PREG error in ' . __FILE__ . ' line ' . __LINE__ . ': ' . preg_last_error());
 		}
 
 		// Perform replacement for ojs://... URLs
@@ -228,6 +229,7 @@ class LensGalleyPlugin extends GenericPlugin {
 			array($this, '_handleOjsUrl'),
 			$contents
 		);
+		if ($contents === null) error_log('PREG error in ' . __FILE__ . ' line ' . __LINE__ . ': ' . preg_last_error());
 
 		// Perform variable replacement for journal, issue, site info
 		$issueDao = DAORegistry::getDAO('IssueDAO');
