@@ -190,15 +190,19 @@ class LensGalleyPlugin extends GenericPlugin {
 	function _getXMLContents($request, $galley) {
 		$journal = $request->getJournal();
 		$submissionFile = $galley->getFile();
-		$contents = file_get_contents($submissionFile->getFilePath());
+		$fileService = Services::get('file');
+		$file = $fileService->get($submissionFile->getData('fileId'));
+		$contents = $fileService->fs->read($file->path);
 
 		// Replace media file references
-		$submissionFileDao = DAORegistry::getDAO('SubmissionFileDAO');
 		import('lib.pkp.classes.submission.SubmissionFile'); // Constants
-		$embeddableFiles = array_merge(
-			$submissionFileDao->getLatestRevisions($submissionFile->getData('submissionId'), SUBMISSION_FILE_PROOF),
-			$submissionFileDao->getLatestRevisionsByAssocId(ASSOC_TYPE_SUBMISSION_FILE, $submissionFile->getFileId(), $submissionFile->getData('submissionId'), SUBMISSION_FILE_DEPENDENT)
-		);
+                $embeddableFilesIterator = Services::get('submissionFile')->getMany([
+                        'assocTypes' => [ASSOC_TYPE_SUBMISSION_FILE],
+                        'assocIds' => [$submissionFile->getId()],
+                        'fileStages' => [SUBMISSION_FILE_DEPENDENT],
+                        'includeDependentFiles' => true,
+		]);
+		$embeddableFiles = iterator_to_array($embeddableFilesIterator);
 		$referredArticle = $referredPublication = null;
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
 		$publicationService = Services::get('publication');
@@ -208,8 +212,8 @@ class LensGalleyPlugin extends GenericPlugin {
 				$referredPublication = $publicationService->get($galley->getData('publicationId'));
 				$referredArticle = $submissionDao->getById($referredPublication->getData('submissionId'));
 			}
-			$fileUrl = $request->url(null, 'article', 'download', array($referredArticle->getBestArticleId(), $galley->getBestGalleyId(), $embeddableFile->getFileId()));
-			$pattern = preg_quote($embeddableFile->getOriginalFileName());
+			$fileUrl = $request->url(null, 'article', 'download', [$referredArticle->getBestArticleId(), $galley->getBestGalleyId(), $embeddableFile->getId()]);
+			$pattern = preg_quote(rawurlencode($embeddableFile->getLocalizedData('name')));
 
 			$contents = preg_replace(
 				$pattern='/([Ss][Rr][Cc]|[Hh][Rr][Ee][Ff]|[Dd][Aa][Tt][Aa])\s*=\s*"([^"]*' . $pattern . ')"/',
