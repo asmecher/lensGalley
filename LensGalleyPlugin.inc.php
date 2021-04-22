@@ -15,6 +15,8 @@
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 
+use \PKP\submission\SubmissionFile;
+
 class LensGalleyPlugin extends GenericPlugin {
 	/**
 	 * @copydoc LazyLoadPlugin::register()
@@ -199,7 +201,7 @@ class LensGalleyPlugin extends GenericPlugin {
                 $embeddableFilesIterator = Services::get('submissionFile')->getMany([
                         'assocTypes' => [ASSOC_TYPE_SUBMISSION_FILE],
                         'assocIds' => [$submissionFile->getId()],
-                        'fileStages' => [SUBMISSION_FILE_DEPENDENT],
+                        'fileStages' => [SubmissionFile::SUBMISSION_FILE_DEPENDENT],
                         'includeDependentFiles' => true,
 		]);
 		$embeddableFiles = iterator_to_array($embeddableFilesIterator);
