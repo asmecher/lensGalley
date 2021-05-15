@@ -200,7 +200,6 @@ class LensGalleyPlugin extends GenericPlugin {
 		$contents = $fileService->fs->read($file->path);
 
 		// Replace media file references
-		import('lib.pkp.classes.submission.SubmissionFile'); // Constants
                 $embeddableFilesIterator = Services::get('submissionFile')->getMany([
                         'assocTypes' => [ASSOC_TYPE_SUBMISSION_FILE],
                         'assocIds' => [$submissionFile->getId()],
