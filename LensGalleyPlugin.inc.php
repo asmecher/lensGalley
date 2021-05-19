@@ -13,14 +13,13 @@
  * @brief Class for LensGalley plugin
  */
 
-import('lib.pkp.classes.plugins.GenericPlugin');
-
 use PKP\submission\SubmissionFile;
+use PKP\plugins\HookRegistry;
 
 use APP\template\TemplateManager;
 use APP\file\PublicFileManager;
 
-class LensGalleyPlugin extends GenericPlugin {
+class LensGalleyPlugin extends \PKP\plugins\GenericPlugin {
 	/**
 	 * @copydoc LazyLoadPlugin::register()
 	 */
