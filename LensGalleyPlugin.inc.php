@@ -13,11 +13,11 @@
  * @brief Class for LensGalley plugin
  */
 
-use PKP\submission\SubmissionFile;
-use PKP\plugins\HookRegistry;
-
-use APP\template\TemplateManager;
+use APP\facades\Repo;
 use APP\file\PublicFileManager;
+use APP\template\TemplateManager;
+use PKP\plugins\HookRegistry;
+use PKP\submission\SubmissionFile;
 
 class LensGalleyPlugin extends \PKP\plugins\GenericPlugin {
 	/**
@@ -207,13 +207,11 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin {
 		]);
 		$embeddableFiles = iterator_to_array($embeddableFilesIterator);
 		$referredArticle = $referredPublication = null;
-		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
-		$publicationService = Services::get('publication');
 		foreach ($embeddableFiles as $embeddableFile) {
 			// Ensure that the $referredArticle object refers to the article we want
 			if (!$referredArticle || !$referredPublication || $referredPublication->getData('submissionId') != $referredArticle->getId() || $referredPublication->getId() != $galley->getData('publicationId')) {
-				$referredPublication = $publicationService->get($galley->getData('publicationId'));
-				$referredArticle = $submissionDao->getById($referredPublication->getData('submissionId'));
+				$referredPublication = Repo::publication()->get($galley->getData('publicationId'));
+				$referredArticle = Repo::submission()->get($referredPublication->getData('submissionId'));
 			}
 			$fileUrl = $request->url(null, 'article', 'download', [$referredArticle->getBestArticleId(), $galley->getBestGalleyId(), $embeddableFile->getId()]);
 			$pattern = preg_quote(rawurlencode($embeddableFile->getLocalizedData('name')));
