@@ -16,6 +16,7 @@
 use APP\facades\Repo;
 use APP\file\PublicFileManager;
 use APP\template\TemplateManager;
+use Illuminate\Support\Facades\App;
 use PKP\plugins\HookRegistry;
 use PKP\submission\SubmissionFile;
 
@@ -194,7 +195,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin {
 	function _getXMLContents($request, $galley) {
 		$journal = $request->getJournal();
 		$submissionFile = $galley->getFile();
-		$fileService = Services::get('file');
+		$fileService = App::make(FileService::class);
 		$file = $fileService->get($submissionFile->getData('fileId'));
 		$contents = $fileService->fs->read($file->path);
 
