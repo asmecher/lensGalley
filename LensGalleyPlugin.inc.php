@@ -233,8 +233,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin {
 		if ($contents === null) error_log('PREG error in ' . __FILE__ . ' line ' . __LINE__ . ': ' . preg_last_error());
 
 		// Perform variable replacement for journal, issue, site info
-		$issueDao = DAORegistry::getDAO('IssueDAO');
-		$issue = $issueDao->getBySubmissionId($galley->getData('submissionId'));
+		$issue = Repo::issue()->getBySubmissionId($galley->getData('submissionId'));
 
 		$journal = $request->getJournal();
 		$site = $request->getSite();
