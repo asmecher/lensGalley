@@ -17,7 +17,7 @@ use APP\facades\Repo;
 use APP\file\PublicFileManager;
 use APP\template\TemplateManager;
 use PKP\plugins\HookRegistry;
-use PKP\submission\SubmissionFile;
+use PKP\submissionFile\SubmissionFile;
 
 class LensGalleyPlugin extends \PKP\plugins\GenericPlugin {
 	/**
@@ -199,12 +199,16 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin {
 		$contents = $fileService->fs->read($file->path);
 
 		// Replace media file references
-                $embeddableFilesIterator = Services::get('submissionFile')->getMany([
-                        'assocTypes' => [ASSOC_TYPE_SUBMISSION_FILE],
-                        'assocIds' => [$submissionFile->getId()],
-                        'fileStages' => [SubmissionFile::SUBMISSION_FILE_DEPENDENT],
-                        'includeDependentFiles' => true,
-		]);
+        $collector = Repo::submissionFiles()
+            ->getCollector()
+            ->filterByAssoc(
+                [ASSOC_TYPE_SUBMISSION_FILE],
+                [$submissionFile->getId()]
+            )
+            ->filterByFileStages([SubmissionFile::SUBMISSION_FILE_DEPENDENT])
+            ->filterByIncludeDependentFiles(true);
+        $embeddableFilesIterator = Repo::submissionFiles()->getMany($collector);
+
 		$embeddableFiles = iterator_to_array($embeddableFilesIterator);
 		$referredArticle = $referredPublication = null;
 		foreach ($embeddableFiles as $embeddableFile) {
