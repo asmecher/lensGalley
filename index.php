@@ -18,5 +18,3 @@
 require_once('LensGalleyPlugin.inc.php');
 
 return new LensGalleyPlugin();
-
-?>
