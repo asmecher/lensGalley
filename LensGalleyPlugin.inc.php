@@ -206,7 +206,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin {
 				[$submissionFile->getId()]
 			)
 			->filterByFileStages([SubmissionFile::SUBMISSION_FILE_DEPENDENT])
-			->filterByIncludeDependentFiles(true);
+			->includeDependentFiles();
 		$embeddableFiles = Repo::submissionFiles()->getMany($collector);
 
 		$referredArticle = $referredPublication = null;
