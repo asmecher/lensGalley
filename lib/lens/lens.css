@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* Lens Base styles */
 /* Textish Styles
 -------------------------------------------------------------------------------*/
@@ -25,7 +24,7 @@
 .content-node.paragraph .content-node.text.heading {
   display: block; }
 
-.content-node.paragraph .content-node.text div {
+.content-node.paragraph > .content-node.text > div {
   display: inline;
   width: auto; }
 
@@ -50,7 +49,6 @@
   display: inline; }
 
 .content-node.heading .content {
-  color: rgba(0, 0, 0, 0.8);
   font-weight: 600;
   line-height: 40px; }
 
@@ -124,21 +122,7 @@
   min-height: 28px; }
 
 .lens-article .content-node.cover {
-  color: rgba(0, 0, 0, 0.8); }
-
-.lens-article .content-node.cover .breadcrumbs {
-  font-size: 14px;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  /* Prevent from nasty scrollbars that appear when eLife logo is shown */
-  overflow: hidden; }
-
-.lens-article .content-node.cover .breadcrumbs a {
-  margin-right: 20px;
-  display: block;
-  float: left;
-  line-height: 40px;
-  height: 40px; }
+  text-align: center; }
 
 .lens-article .content-node.cover .content {
   background: none; }
@@ -150,20 +134,25 @@
   padding-top: 20px; }
 
 .lens-article .content-node.cover .published-on {
-  margin-top: 50px;
-  margin-bottom: 20px;
-  color: #666; }
+  color: #999; }
+
+.lens-article .content-node.cover .published-on a {
+  font-weight: 600;
+  color: #999; }
+
+.lens-article .content-node.cover .published-on a:hover {
+  color: #0277BD; }
 
 .lens-article .content-node.cover .doi {
   margin-top: 30px;
   margin-bottom: 20px;
-  color: #666;
   font-size: 14px; }
 
 .lens-article .content-node.cover .content .authors {
   padding-top: 30px;
   color: #1B6685;
-  overflow: auto; }
+  overflow: auto;
+  margin-bottom: 24px; }
 
 .lens-article .content-node.cover .content .links {
   margin-top: 20px;
@@ -175,12 +164,12 @@
 
 /* One para per author */
 .lens-article .content-node.cover .authors .text {
-  float: left;
+  display: inline-block;
   padding: 0px;
   margin: 0px;
   font-size: 17px;
   margin-right: 10px;
-  margin-bottom: 8px; }
+  margin-bottom: 0px; }
 
 .lens-article .content-node.cover .authors .text.plain {
   color: #777;
@@ -316,8 +305,8 @@ Definition
   position: relative;
   border-collapse: collapse;
   border-spacing: 0;
-  margin-bottom: 20px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  margin-bottom: 20px; }
 
 .lens-article .content-node.html-table thead tr {
   background: #eee; }
@@ -367,7 +356,7 @@ Definition
   padding-bottom: 10px; }
 
 /*
-Contributor 
+Contributor
 --------------------------------------- */
 .lens-article .resources .content-node.contributor .resource-header .name {
   font-weight: normal;
@@ -375,8 +364,8 @@ Contributor
   color: #888; }
 
 .lens-article .content-node.contributor .affiliation {
-  margin-top: 10px;
-  font-size: 14px; }
+  margin-top: 12px;
+  margin-bottom: 12px; }
 
 .lens-article .content-node.contributor .contributor-bio {
   padding-top: 30px; }
@@ -400,15 +389,27 @@ Contributor
   font-weight: 600;
   margin-bottom: 20px; }
 
-.lens-article .content-node.contributor .label {
-  font-size: 14px;
-  margin-top: 20px;
-  color: #999; }
+.lens-article .content-node.contributor .contrib-label {
+  font-weight: 600; }
+
+.lens-article .content-node.contributor .contrib-data {
+  margin-bottom: 12px; }
+
+.content-node.quote > .content {
+  padding: 20px; }
+
+.document .content-node.quote .content-node.paragraph {
+  padding: 10px 40px 10px 40px;
+  border-left: 3px solid #ccc; }
+
+.surface.content .content-node.quote > .content > .label {
+  font-weight: 600;
+  padding-bottom: 20px; }
 
 /* Publication Info */
 .lens-article .content-node.publication-info {
-  font-size: 14px;
-  color: #333; }
+  color: #333;
+  font-size: 16px; }
 
 .lens-article .content-node.publication-info table {
   padding: 10px 0;
@@ -427,24 +428,15 @@ Contributor
 .lens-article .content-node.publication-info .value {
   margin-left: 140px; }
 
-.lens-article .content-node.publication-info .dates {
-  /*font-size: 14px;*/ }
-
 .article .resources .nodes > .content-node.publication-info > .content {
   border: none;
   padding: 20px; }
 
-.article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] {
-  font-size: 14px; }
-
-.article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] .heading.level-3 {
-  padding-top: 10px; }
-
 .article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] .heading.level-3 .content {
-  font-size: 14px;
-  font-weight: normal;
-  font-family: "Source Sans Pro";
-  color: #999; }
+  font-size: 20px;
+  margin-top: 12px;
+  /* The 'content-node paragraph' below has a padding top making the space between the heading and text 22px rather than 12. */
+  /* margin-bottom: 12px; */ }
 
 .article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] .content-node {
   padding-top: 10px; }
@@ -627,7 +619,7 @@ out (on iOS 5.1), or flicker (on iOS 6). */
   padding-right: 50px;
   position: relative; }
 
-/* It's not exactly good to have the overflow-y: scroll for the container AND the surface.
+/* It's not exactly good to have the overflow-y: scroll for the container AND the surface.
    There should be just one overflowing container, if possible
 */
 .article .resources .panel {
@@ -648,7 +640,6 @@ out (on iOS 5.1), or flicker (on iOS 6). */
   right: 0px;
   overflow-y: scroll;
   overflow-x: hidden;
-  font-size: 14px;
   -webkit-overflow-scrolling: touch; }
 
 .article .nodes {
@@ -660,7 +651,6 @@ out (on iOS 5.1), or flicker (on iOS 6). */
   padding-right: 20px; }
 
 .article .resources .nodes > .content-node {
-  color: #505050;
   position: relative;
   background: #fff;
   border-bottom: 1px solid #ddd;
@@ -699,7 +689,6 @@ out (on iOS 5.1), or flicker (on iOS 6). */
 .article .resources .resource-header .name {
   display: block;
   min-height: 30px;
-  color: #444;
   font-size: 16px;
   line-height: 21px;
   padding: 0px 20px;
@@ -837,7 +826,6 @@ span.annotation.formula_reference, span.publication_reference {
   background-color: rgba(237, 96, 48, 0.3); }
 
 .content-node .link {
-  color: #1B6685;
   font-weight: bold; }
 
 .content-node .link:hover, .content-node .link.highlighted {
@@ -979,7 +967,7 @@ span.annotation.formula_reference, span.publication_reference {
   height: 0px; }
 
 .article .document .surface.content::-webkit-scrollbar-thumb {
-  background-color: transparent; }
+  background-color: rgba(0, 0, 0, 0); }
 
 .scrollbar-cover {
   position: absolute;
@@ -998,7 +986,7 @@ span.annotation.formula_reference, span.publication_reference {
 
 .article .resources .panel::-webkit-scrollbar-thumb,
 .article .resources .surface::-webkit-scrollbar-thumb {
-  background-color: transparent; }
+  background-color: rgba(0, 0, 0, 0); }
 
 /* Resources Scrollbar */
 /* ---------------------------------------*/
@@ -1150,8 +1138,12 @@ TOC
 
 /* Colors for scroll-bar overlays */
 .article .resources .figures .surface-scrollbar .highlighted,
-.article .content .surface-scrollbar .highlighted.figure_reference {
+.article .content .surface-scrollbar .highlighted.figure_reference,
+.article .content .surface-scrollbar .highlighted.figure {
   background-color: #91bb04; }
+
+.article .content .surface-scrollbar .highlighted.figure.main-occurrence {
+  border-right: 3px solid #5C6148; }
 
 .article .resources .citations .surface-scrollbar .highlighted,
 .article .content .surface-scrollbar .highlighted.citation_reference {
@@ -1176,6 +1168,34 @@ TOC
 .panel.document .nodes > .content-node > .focus-handle:hover {
   border-left: 3px solid #bbb; }
 
+/* Footnote
+=============================== */
+.content-node.footnote {
+  font-size: 13px;
+  display: block !important;
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px; }
+
+.footnote-reference > a {
+  vertical-align: super;
+  padding: 0 2px;
+  border: 1px solid #ddd;
+  font-size: 13px; }
+
+.footnote-reference > a:hover {
+  background: #eee; }
+
+.footnote-reference.sm-expanded > a {
+  background: #ddd; }
+
+.footnote-reference > .footnote {
+  display: none !important; }
+
+.footnote-reference.sm-expanded > .footnote {
+  display: block !important; }
+
 /*
   Typography / Basics
 ---------------------------------------------*/
@@ -1186,7 +1206,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: white;
-  /*  -moz-transition: background-color 200ms linear;
+  /* -moz-transition: background-color 200ms linear;
   -o-transition: background-color 200ms linear;
   -webkit-transition: background-color 200ms linear;
   transition: background-color 200ms linear;*/ }
@@ -1211,7 +1231,7 @@ body.reader {
   clear: both; }
 
 /*
-General Layout 
+General Layout
 --------------------------------------- */
 #container {
   position: relative;
@@ -1306,6 +1326,42 @@ p:last-child {
   font-weight: bold;
   color: gold; }
 
+.author-callout-style-a1 {
+  color: #366bfb; }
+
+.author-callout-style-a2 {
+  color: #9c27b0; }
+
+.author-callout-style-a3 {
+  color: #d50000; }
+
+.author-callout-style-b1 {
+  background-color: #90caf9; }
+
+.author-callout-style-b2 {
+  background-color: #c5e1a5; }
+
+.author-callout-style-b3 {
+  background-color: #ffb74d; }
+
+.author-callout-style-b4 {
+  background-color: #fff176; }
+
+.author-callout-style-b5 {
+  background-color: #9e86c9; }
+
+.author-callout-style-b6 {
+  background-color: #e57373; }
+
+.author-callout-style-b7 {
+  background-color: #f48fb1; }
+
+.author-callout-style-b8 {
+  background-color: #e6e6e6; }
+
+.lens-article .content-node.cover .subjects a:not(:last-child):after {
+  content: ', '; }
+
 /* main
    --------------------------------------- */
 #main {
@@ -1371,3 +1427,237 @@ body.loading .spinner-wrapper {
 
 #MathJax_Message {
   display: none; }
+
+/* Default style
+=============================== */
+/* Used as a mixin */
+.contextual-label, .lens-article .content-node.cover .breadcrumbs a, .lens-article .content-node.cover .published-on, .lens-article .content-node.cover .subjects, .lens-article .content-node.cover .doi, .lens-article .content-node.cover .content .links a, .lens-article .resources .content-node.citation .resource-header .name, .lens-article .resources .content-node.contributor .resource-header .name {
+  font-family: "Avenir Next", "Helvetica", arial, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .5px; }
+
+html {
+  -webkit-font-smoothing: inherit; }
+
+body {
+  font-family: "Avenir Next", "Helvetica", arial, sans-serif;
+  font-weight: 500;
+  color: #212121; }
+
+/* Links */
+a {
+  color: #0277BD;
+  text-decoration: none; }
+
+a:hover {
+  color: #0277BD; }
+
+/* Line height overrides */
+.article .resources {
+  line-height: 24px; }
+
+/* Bread crumbs */
+/* Article title */
+.lens-article .content-node.cover .title {
+  font-size: 36px;
+  line-height: 48px;
+  font-weight: 600; }
+
+/* Published date */
+.lens-article .content-node.cover .subjects a {
+  font-weight: 600; }
+
+/* Authors on cover page */
+.lens-article .content-node.cover .doi {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  margin: 24px 0;
+  padding: 11px 0; }
+  .lens-article .content-node.cover .doi a {
+    text-transform: none;
+    color: #212121;
+    font-weight: 600; }
+
+.lens-article .content-node.cover .authors .text a {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 12px;
+  color: #212121; }
+
+.lens-article .content-node.cover .authors .text a:hover {
+  background: none;
+  color: #0277BD; }
+
+.lens-article .content-node.cover .authors .contributor_reference.highlighted {
+  border-bottom: 1px solid #0277BD;
+  background: none;
+  color: #0277BD; }
+
+/* Links on cover page (PDF, Source XML, Lens JSON) */
+.lens-article .content-node.cover .content .links {
+  display: none; }
+
+.lens-article .content-node.cover .content .links a {
+  font-weight: 600; }
+
+/* Paragraph (only in main content) */
+.surface.content .content-node.paragraph {
+  font-family: "PT Serif", "Georgia", serif;
+  line-height: 1.5;
+  font-size: 16px; }
+
+/* Headings */
+.content-node.heading.level-1 .content {
+  font-size: 26px;
+  line-height: 24px;
+  padding-top: 24px;
+  font-weight: 600; }
+
+.content-node.heading.level-2 .content {
+  font-size: 22px;
+  line-height: 24px;
+  padding-top: 12px;
+  font-weight: 600; }
+
+.surface.content .nodes > .content-node.heading.level-2 {
+  padding-bottom: 0px; }
+
+.content-node.heading.level-3 .content {
+  font-size: 20px;
+  line-height: 24px;
+  padding-top: 12px;
+  font-weight: 600; }
+
+.surface.content .nodes > .content-node.heading.level-3 {
+  padding-bottom: 0px; }
+
+.content-node.heading.level-4 .content {
+  font-size: 18px;
+  line-height: 24px;
+  padding-top: 12px;
+  font-weight: 600; }
+
+.surface.content .nodes > .content-node.heading.level-4 {
+  padding-bottom: 0px; }
+
+.content-node.heading.level-5 .content {
+  font-size: 16px;
+  line-height: 24px;
+  padding-top: 12px;
+  font-weight: 600; }
+
+.surface.content .nodes > .content-node.heading.level-5 {
+  padding-bottom: 0px; }
+
+/* Headings in TOC */
+.resource-view.toc .heading-ref {
+  color: inherit;
+  padding: 0;
+  margin-bottom: 12px;
+  border: none; }
+
+.resource-view.toc .heading-ref.active {
+  color: inherit;
+  border: none; }
+  .resource-view.toc .heading-ref.active span {
+    text-decoration: underline; }
+
+.resource-view.toc .heading-ref {
+  font-size: 16px; }
+
+.resource-view.toc .heading-ref.level-2 {
+  font-weight: 500;
+  font-size: 16px;
+  padding-left: 24px; }
+
+.resource-view.toc .heading-ref.level-3 {
+  font-weight: 500;
+  font-size: 16px;
+  padding-left: 48px; }
+
+.resource-view.toc .heading-ref.level-4 {
+  padding-left: 48px; }
+
+/* Reference card */
+.lens-article .resources .content-node.citation .resource-header .name {
+  font-weight: 600; }
+
+.lens-article .resources .content-node.contributor .resource-header .name {
+  font-weight: 600;
+  font-size: 14px; }
+
+/* Scrollbar default highlight color */
+.node.highlighted {
+  background: #666; }
+
+/* Highlighted resource default style (e.g. contributor) */
+.article .resources .info .content-node.highlighted {
+  border-left: 3px solid #212121; }
+
+/* Citation resource */
+.lens-article .resources .content-node.citation {
+  font-family: "PT Serif", "Georgia", serif; }
+
+.lens-article .content-node.citation .content .authors {
+  font-family: "Avenir Next", "Helvetica", arial, sans-serif;
+  font-weight: 600;
+  font-size: 14px; }
+
+.lens-article .content-node.citation .content .source,
+.lens-article .content-node.citation .content .doi {
+  font-size: 11px; }
+
+/* Change font-size for all resource nodes */
+.lens-article .resources .figures .nodes > .content-node {
+  font-size: 13px; }
+
+/* Caption title (e.g. figure, table) */
+.lens-article .content-node.caption > .content > .content-node.caption-title {
+  font-size: 13px;
+  padding-bottom: 0px; }
+
+/* Label for resources */
+.article .resources .resource-header .name {
+  font-size: 13px; }
+
+/* HACK: Make sure always the interface font is in toggle buttons (focus, fullscreen) */
+.article .resources .content-node .resource-header .toggles {
+  font-family: "Avenir Next", "Helvetica", arial, sans-serif; }
+
+/* Resource view */
+.panel.info {
+  font-family: "PT Serif", "Georgia", serif; }
+
+.lens-article .content-node.publication-info .label {
+  font-family: "Avenir Next", "Helvetica", arial, sans-serif; }
+
+.article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] .heading .content {
+  font-weight: 600; }
+
+.lens-article .content-node.contributor .label {
+  font-family: "Avenir Next", "Helvetica", arial, sans-serif;
+  color: #212121;
+  font-weight: 600; }
+
+.article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] .heading.level-3 .content {
+  font-family: "Avenir Next", "Helvetica", arial, sans-serif;
+  font-weight: 600; }
+
+.lens-article .resources .content-node.contributor .resource-header .name {
+  font-size: 11px; }
+
+.lens-article .content-node.publication-info .label {
+  color: #212121;
+  font-weight: 600;
+  font-size: 14px; }
+
+.lens-article .content-node.contributor .contributor-name {
+  font-family: "Avenir Next", "Helvetica", arial, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  margin-top: 12px;
+  margin-bottom: 12px; }
