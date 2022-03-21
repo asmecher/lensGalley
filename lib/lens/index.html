@@ -2,9 +2,9 @@
 <html xmlns:mml="http://www.w3.org/1998/Math/MathML">
   <head>
     <title>eLife Lens</title>
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic' rel='stylesheet' type='text/css'>
-    
-    <link rel="stylesheet" type="text/css" media="all" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" media="all" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
 
     <!-- A combined lens.css will be generated in the bundling process -->
     <!-- While in development, separate links for each CSS file are added, so we don't need a source map -->
@@ -20,16 +20,16 @@
         styles: {".MathJax_Display": {padding: "0em 0em 0em 3em" },".MathJax_SVG_Display": {padding: "0em 0em 0em 3em" }}
       });
     </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     <script src='lens.js'></script>
-    
+    <script src="elife_api.js"></script>
     <script>
-    
+
       // Little helper used to parse query strings from urls
       // --------
       //
-      
+
       var qs = function () {
         var query_string = {};
         var query = window.location.search.substring(1);
@@ -48,31 +48,32 @@
             query_string[pair[0]].push(pair[1]);
           }
         }
+        elifeApiCall();
         return query_string;
       } ();
-      
+
       // This document gets loaded by default
       // --------
-      
-      var documentURL = "https://s3.amazonaws.com/elife-cdn/elife-articles/00778/elife00778.xml";
-      
+
+      var documentURL = "https://s3.amazonaws.com/elife-publishing-cdn/00778/elife-00778-v1.xml";
+
       $(function() {
-      
+
         // Create a new Lens app instance
         // --------
         //
         // Injects itself into body
-      
+
         var app = new window.Lens({
           document_url: qs.url ? decodeURIComponent(qs.url) : documentURL
         });
-      
+
         app.start();
-      
+
         window.app = app;
-      
+
       });
-    
+
     </script>
 
   </head>
