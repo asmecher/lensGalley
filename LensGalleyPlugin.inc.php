@@ -192,7 +192,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         $fileId = & $args[2];
         $request = Application::get()->getRequest();
 
-        if ($galley && in_array($galley->getFileType(), ['application/xml', 'text/xml']) && $galley->getFileId() == $fileId) {
+        if ($galley && in_array($galley->getFileType(), ['application/xml', 'text/xml']) && $galley->getData('submissionId') == $fileId) {
             if (!HookRegistry::call('LensGalleyPlugin::articleDownload', [$article,  &$galley, &$fileId])) {
                 $xmlContents = $this->_getXMLContents($request, $galley);
                 header('Content-Type: application/xml');
@@ -215,7 +215,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
      * This function performs any necessary filtering, like image URL replacement.
      *
      * @param PKPRequest $request
-     * @param ArticleGalley $galley
+     * @param Galley $galley
      *
      * @return string
      */
