@@ -17,6 +17,8 @@ use APP\core\Application;
 use APP\core\Services;
 use APP\facades\Repo;
 use APP\file\PublicFileManager;
+use APP\observers\events\UsageEvent;
+use APP\submission\Submission;
 use APP\template\TemplateManager;
 use PKP\config\Config;
 use PKP\plugins\HookRegistry;
@@ -203,6 +205,11 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                 echo $xmlContents;
                 $returner = true;
                 HookRegistry::call('LensGalleyPlugin::articleDownloadFinished', [&$returner]);
+                if ($article->getData('status') == Submission::STATUS_PUBLISHED && !$request->isDNTSet()) {
+                    $submissionFile = Repo::submissionFile()->get($galley->getData('submissionFileId'));
+                    $publication = Repo::publication()->get($galley->getData('publicationId'));
+                    event(new UsageEvent(Application::ASSOC_TYPE_SUBMISSION_FILE, $fileId, $article->getData('contextId'), $article->getId(), $galley->getId(), $submissionFile->getData('mimetype'), $publication->getData('issueId')));
+				}
             }
             return true;
         }
