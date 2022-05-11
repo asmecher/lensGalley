@@ -1,0 +1,21 @@
+# Studiorimau <studiorimau@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-10-05 10:06+0000\n"
+"Last-Translator: Studiorimau <studiorimau@gmail.com>\n"
+"Language-Team: Malay <http://translate.pkp.sfu.ca/projects/plugins/"
+"lens-galley-plugin/ms/>\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.9.1\n"
+
+msgid "plugins.generic.lensGalley.description"
+msgstr ""
+"Plugin ini memberikan sokongan rendering untuk galleys JATS XML menggunakan "
+"eLife Lens."
+
+msgid "plugins.generic.lensGalley.displayName"
+msgstr "Pemapar Artikel eLife Lens"
