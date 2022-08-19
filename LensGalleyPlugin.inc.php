@@ -238,15 +238,15 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         $contents = $fileService->fs->read($file->path);
 
         // Replace media file references
-        $collector = Repo::submissionFile()
+        $embeddableFiles = Repo::submissionFile()
             ->getCollector()
             ->filterByAssoc(
                 ASSOC_TYPE_SUBMISSION_FILE,
                 [$submissionFile->getId()]
             )
             ->filterByFileStages([SubmissionFile::SUBMISSION_FILE_DEPENDENT])
-            ->includeDependentFiles();
-        $embeddableFiles = Repo::submissionFile()->getMany($collector);
+            ->includeDependentFiles()
+            ->getMany();
 
         $referredArticle = $referredPublication = null;
         foreach ($embeddableFiles as $embeddableFile) {
