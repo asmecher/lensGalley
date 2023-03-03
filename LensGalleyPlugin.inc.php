@@ -20,7 +20,7 @@ use APP\file\PublicFileManager;
 use APP\observers\events\UsageEvent;
 use APP\template\TemplateManager;
 use PKP\config\Config;
-use PKP\plugins\HookRegistry;
+use PKP\plugins\Hook;
 use PKP\submissionFile\SubmissionFile;
 
 class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
@@ -34,9 +34,9 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
     {
         if (parent::register($category, $path, $mainContextId)) {
             if ($this->getEnabled()) {
-                HookRegistry::register('ArticleHandler::view::galley', [$this, 'articleCallback']);
-                HookRegistry::register('IssueHandler::view::galley', [$this, 'issueCallback']);
-                HookRegistry::register('ArticleHandler::download', [$this, 'articleDownloadCallback'], HOOK_SEQUENCE_LATE);
+                Hook::add('ArticleHandler::view::galley', [$this, 'articleCallback']);
+                Hook::add('IssueHandler::view::galley', [$this, 'issueCallback']);
+                Hook::add('ArticleHandler::download', [$this, 'articleDownloadCallback'], HOOK_SEQUENCE_LATE);
             }
             return true;
         }
@@ -194,7 +194,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         $request = Application::get()->getRequest();
 
         if ($galley && in_array($galley->getFileType(), ['application/xml', 'text/xml']) && $galley->getData('submissionId') == $fileId) {
-            if (!HookRegistry::call('LensGalleyPlugin::articleDownload', [$article,  &$galley, &$fileId])) {
+            if (!Hook::run('LensGalleyPlugin::articleDownload', [[$article,  &$galley, &$fileId]])) {
                 $xmlContents = $this->_getXMLContents($request, $galley);
                 header('Content-Type: application/xml');
                 header('Content-Length: ' . strlen($xmlContents));
@@ -203,7 +203,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                 header('Pragma: public');
                 echo $xmlContents;
                 $returner = true;
-                HookRegistry::call('LensGalleyPlugin::articleDownloadFinished', [&$returner]);
+                Hook::run('LensGalleyPlugin::articleDownloadFinished', [[&$returner]]);
 
                 $submissionFile = Repo::submissionFile()->get($galley->getData('submissionFileId'));
                 $publication = Repo::publication()->get($galley->getData('publicationId'));
@@ -312,8 +312,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
             switch (strtolower_codesafe($urlParts[0])) {
             case 'journal':
                 $url = $request->url(
-                    $urlParts[1] ??
-                $request->getRequestedJournalPath(),
+                    $urlParts[1] ?? $request->getRouter()->getRequestedContextPath($request),
                     null,
                     null,
                     null,
