@@ -13,6 +13,8 @@
  * @brief Class for LensGalley plugin
  */
 
+namespace APP\plugins\generic\lensGalley;
+
 use APP\core\Application;
 use APP\core\Services;
 use APP\facades\Repo;
