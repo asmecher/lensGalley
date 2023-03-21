@@ -22,6 +22,8 @@ use APP\file\PublicFileManager;
 use APP\observers\events\UsageEvent;
 use APP\template\TemplateManager;
 use PKP\config\Config;
+use PKP\core\PKPRequest;
+use PKP\galley\Galley;
 use PKP\plugins\Hook;
 use PKP\submissionFile\SubmissionFile;
 
@@ -235,7 +237,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         $embeddableFiles = Repo::submissionFile()
             ->getCollector()
             ->filterByAssoc(
-                ASSOC_TYPE_SUBMISSION_FILE,
+                Application::ASSOC_TYPE_SUBMISSION_FILE,
                 [$submissionFile->getId()]
             )
             ->filterByFileStages([SubmissionFile::SUBMISSION_FILE_DEPENDENT])
@@ -304,61 +306,61 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         $urlParts = explode('/', $url);
         if (isset($urlParts[0])) {
             switch (strtolower_codesafe($urlParts[0])) {
-            case 'journal':
-                $url = $request->url(
-                    $urlParts[1] ?? $request->getRouter()->getRequestedContextPath($request),
-                    null,
-                    null,
-                    null,
-                    null,
-                    $anchor
-                );
-                break;
-            case 'article':
-                if (isset($urlParts[1])) {
+                case 'journal':
                     $url = $request->url(
+                        $urlParts[1] ?? $request->getRouter()->getRequestedContextPath($request),
                         null,
-                        'article',
-                        'view',
-                        $urlParts[1],
                         null,
-                        $anchor
-                    );
-                }
-                break;
-            case 'issue':
-                if (isset($urlParts[1])) {
-                    $url = $request->url(
-                        null,
-                        'issue',
-                        'view',
-                        $urlParts[1],
-                        null,
-                        $anchor
-                    );
-                } else {
-                    $url = $request->url(
-                        null,
-                        'issue',
-                        'current',
                         null,
                         null,
                         $anchor
                     );
-                }
-                break;
-            case 'sitepublic':
-                array_shift($urlParts);
-                $publicFileManager = new PublicFileManager();
-                $url = $request->getBaseUrl() . '/' . $publicFileManager->getSiteFilesPath() . '/' . implode('/', $urlParts) . ($anchor ? '#' . $anchor : '');
-                break;
-            case 'public':
-                array_shift($urlParts);
-                $journal = $request->getJournal();
-                $publicFileManager = new PublicFileManager();
-                $url = $request->getBaseUrl() . '/' . $publicFileManager->getContextFilesPath($journal->getId()) . '/' . implode('/', $urlParts) . ($anchor ? '#' . $anchor : '');
-                break;
-        }
+                    break;
+                case 'article':
+                    if (isset($urlParts[1])) {
+                        $url = $request->url(
+                            null,
+                            'article',
+                            'view',
+                            $urlParts[1],
+                            null,
+                            $anchor
+                        );
+                    }
+                    break;
+                case 'issue':
+                    if (isset($urlParts[1])) {
+                        $url = $request->url(
+                            null,
+                            'issue',
+                            'view',
+                            $urlParts[1],
+                            null,
+                            $anchor
+                        );
+                    } else {
+                        $url = $request->url(
+                            null,
+                            'issue',
+                            'current',
+                            null,
+                            null,
+                            $anchor
+                        );
+                    }
+                    break;
+                case 'sitepublic':
+                    array_shift($urlParts);
+                    $publicFileManager = new PublicFileManager();
+                    $url = $request->getBaseUrl() . '/' . $publicFileManager->getSiteFilesPath() . '/' . implode('/', $urlParts) . ($anchor ? '#' . $anchor : '');
+                    break;
+                case 'public':
+                    array_shift($urlParts);
+                    $journal = $request->getJournal();
+                    $publicFileManager = new PublicFileManager();
+                    $url = $request->getBaseUrl() . '/' . $publicFileManager->getContextFilesPath($journal->getId()) . '/' . implode('/', $urlParts) . ($anchor ? '#' . $anchor : '');
+                    break;
+            }
         }
         return $matchArray[1] . $url . $matchArray[3];
     }
