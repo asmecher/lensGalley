@@ -38,7 +38,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
             if ($this->getEnabled()) {
                 Hook::add('ArticleHandler::view::galley', [$this, 'articleCallback']);
                 Hook::add('IssueHandler::view::galley', [$this, 'issueCallback']);
-                Hook::add('ArticleHandler::download', [$this, 'articleDownloadCallback'], HOOK_SEQUENCE_LATE);
+                Hook::add('ArticleHandler::download', [$this, 'articleDownloadCallback'], Hook::SEQUENCE_LATE);
             }
             return true;
         }
