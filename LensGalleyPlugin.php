@@ -142,14 +142,6 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                 'galley' => $galley,
                 'jQueryUrl' => $this->_getJQueryUrl($request),
             ]);
-            $templateMgr->addJavaScript(
-                'jquery',
-                $jquery,
-                [
-                    'priority' => TemplateManager::STYLE_SEQUENCE_CORE,
-                    'contexts' => 'frontend',
-                ]
-            );
             $templateMgr->display($this->getTemplateResource('issueGalley.tpl'));
             return true;
         }
