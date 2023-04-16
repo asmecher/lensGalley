@@ -254,7 +254,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                 $referredArticle = Repo::submission()->get($referredPublication->getData('submissionId'));
             }
             $fileUrl = $request->url(null, 'article', 'download', [$referredArticle->getBestArticleId(), $galley->getBestGalleyId(), $embeddableFile->getId()]);
-            $pattern = preg_quote(rawurlencode($embeddableFile->getLocalizedData('name')));
+            $pattern = preg_quote(rawurlencode($embeddableFile->getLocalizedData('name')), '/');
 
             $contents = preg_replace(
                 $pattern = '/([Ss][Rr][Cc]|[Hh][Rr][Ee][Ff]|[Dd][Aa][Tt][Aa])\s*=\s*"([^"]*' . $pattern . ')"/',
