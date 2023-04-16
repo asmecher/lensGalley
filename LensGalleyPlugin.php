@@ -8,6 +8,7 @@
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class LensGalleyPlugin
+ *
  * @ingroup plugins_generic_lensGalley
  *
  * @brief Class for LensGalley plugin
@@ -16,6 +17,7 @@
 namespace APP\plugins\generic\lensGalley;
 
 use APP\core\Application;
+use APP\core\Request;
 use APP\core\Services;
 use APP\facades\Repo;
 use APP\file\PublicFileManager;
@@ -220,7 +222,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
      * Return string containing the contents of the XML file.
      * This function performs any necessary filtering, like image URL replacement.
      *
-     * @param PKPRequest $request
+     * @param Request $request
      * @param Galley $galley
      *
      * @return string
