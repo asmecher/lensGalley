@@ -40,9 +40,9 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
     {
         if (parent::register($category, $path, $mainContextId)) {
             if ($this->getEnabled()) {
-                Hook::add('ArticleHandler::view::galley', [$this, 'articleCallback']);
-                Hook::add('IssueHandler::view::galley', [$this, 'issueCallback']);
-                Hook::add('ArticleHandler::download', [$this, 'articleDownloadCallback'], Hook::SEQUENCE_LATE);
+                Hook::add('ArticleHandler::view::galley', $this->articleCallback(...));
+                Hook::add('IssueHandler::view::galley', $this->issueCallback(...));
+                Hook::add('ArticleHandler::download', $this->articleDownloadCallback(...), Hook::SEQUENCE_LATE);
             }
             return true;
         }
@@ -269,7 +269,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         // Perform replacement for ojs://... URLs
         $contents = preg_replace_callback(
             '/(<[^<>]*")[Oo][Jj][Ss]:\/\/([^"]+)("[^<>]*>)/',
-            [$this, '_handleOjsUrl'],
+            $this->_handleOjsUrl(...),
             $contents
         );
         if ($contents === null) {
