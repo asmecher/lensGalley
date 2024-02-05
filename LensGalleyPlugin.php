@@ -108,7 +108,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                 'galleyFile' => $galley->getFile(),
                 'issue' => $issue,
                 'article' => $submission,
-                'bestId' => $submission->getBestId(),
+                'bestId' => $galleyPublication->getData('urlPath') ?? $submission->getId(),
                 'isLatestPublication' => $submission->getData('currentPublicationId') === $galley->getData('publicationId'),
                 'galleyPublication' => $galleyPublication,
                 'galley' => $galley,
@@ -253,7 +253,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                 $referredPublication = Repo::publication()->get($galley->getData('publicationId'));
                 $referredArticle = Repo::submission()->get($referredPublication->getData('submissionId'));
             }
-            $fileUrl = $request->url(null, 'article', 'download', [$referredArticle->getBestArticleId(), $galley->getBestGalleyId(), $embeddableFile->getId()]);
+            $fileUrl = $request->url(null, 'article', 'download', [$referredPublication->getData('urlPath') ?? $referredArticle->getId(), $galley->getBestGalleyId(), $embeddableFile->getId()]);
             $pattern = preg_quote(rawurlencode($embeddableFile->getLocalizedData('name')), '/');
 
             $contents = preg_replace(

@@ -7,7 +7,7 @@
  *
  * Embedded viewing of a JATS XML galley.
  *}
-{include file="frontend/components/header.tpl" pageTitleTranslated=$article->getLocalizedTitle()|escape}
+{include file="frontend/components/header.tpl" pageTitleTranslated=$galleyPublication->getLocalizedTitle()|escape}
 
 <div class="page">
 	{capture assign="xmlUrl"}{strip}
