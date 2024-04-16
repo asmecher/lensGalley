@@ -191,7 +191,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         $fileId = & $args[2];
         $request = Application::get()->getRequest();
 
-        if ($galley && in_array($galley->getFileType(), ['application/xml', 'text/xml']) && $galley->getData('submissionId') == $fileId) {
+        if ($galley && in_array($galley->getFileType(), ['application/xml', 'text/xml']) && $galley->getData('submissionFileId') == $fileId) {
             if (!Hook::run('LensGalleyPlugin::articleDownload', [[$article,  &$galley, &$fileId]])) {
                 $xmlContents = $this->_getXMLContents($request, $galley);
                 header('Content-Type: application/xml');
@@ -276,8 +276,11 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
             error_log('PREG error in ' . __FILE__ . ' line ' . __LINE__ . ': ' . preg_last_error());
         }
 
+        $submissionFileAux = $galley->getFile();
+        $submissionIdAux = $submissionFileAux->getData('submissionId');
+
         // Perform variable replacement for journal, issue, site info
-        $issue = Repo::issue()->getBySubmissionId($galley->getData('submissionId'));
+        $issue = Repo::issue()->getBySubmissionId($galley->getData($submissionIdAux));
 
         $journal = $request->getJournal();
         $site = $request->getSite();
