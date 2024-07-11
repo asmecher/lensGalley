@@ -163,7 +163,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
     private function _getJQueryUrl($request)
     {
         $min = Config::getVar('general', 'enable_minified') ? '.min' : '';
-        return $request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jquery/jquery' . $min . '.js';
+        return $request->getBaseUrl() . '/js/build/jquery/jquery' . $min . '.js';
     }
 
     /**
