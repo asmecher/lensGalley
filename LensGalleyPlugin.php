@@ -191,7 +191,12 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         $fileId = & $args[2];
         $request = Application::get()->getRequest();
 
-        if ($galley && in_array($galley->getFileType(), ['application/xml', 'text/xml']) && $galley->getData('submissionId') == $fileId) {
+        if (!$galley) {
+            return false;
+        }
+
+        $submissionFile = $galley->getFile();
+        if ($galley->getData('submissionFileId') == $fileId && in_array($submissionFile->getData('mimetype'), ['application/xml', 'text/xml']) && $galley->getData('submissionFileId') == $submissionFile->getId()) {
             if (!Hook::run('LensGalleyPlugin::articleDownload', [[$article,  &$galley, &$fileId]])) {
                 $xmlContents = $this->_getXMLContents($request, $galley);
                 header('Content-Type: application/xml');
@@ -253,9 +258,15 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                 $referredPublication = Repo::publication()->get($galley->getData('publicationId'));
                 $referredArticle = Repo::submission()->get($referredPublication->getData('submissionId'));
             }
-            $fileUrl = $request->url(null, 'article', 'download', [$referredArticle->getBestArticleId(), $galley->getBestGalleyId(), $embeddableFile->getId()]);
-            $pattern = preg_quote(rawurlencode($embeddableFile->getLocalizedData('name')), '/');
 
+            $params = [];
+
+            if ($embeddableFile->getData('mimetype') == 'text/plain' || $embeddableFile->getData('mimetype') == 'text/css') {
+                $params['inline'] = 'true';
+            }
+
+            $fileUrl = $request->url(null, 'article', 'download', [$referredArticle->getBestId(), 'version', $galley->getData('publicationId'), $galley->getBestGalleyId(), $embeddableFile->getId(), $embeddableFile->getLocalizedData('name')], $params);
+            $pattern = preg_quote(rawurlencode($embeddableFile->getLocalizedData('name')), '/');
             $contents = preg_replace(
                 $pattern = '/([Ss][Rr][Cc]|[Hh][Rr][Ee][Ff]|[Dd][Aa][Tt][Aa])\s*=\s*"([^"]*' . $pattern . ')"/',
                 '\1="' . $fileUrl . '"',
@@ -277,7 +288,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         }
 
         // Perform variable replacement for journal, issue, site info
-        $issue = Repo::issue()->getBySubmissionId($galley->getData('submissionId'));
+        $issue = Repo::issue()->getBySubmissionId($referredPublication->getData('submissionId'));
 
         $journal = $request->getJournal();
         $site = $request->getSite();
