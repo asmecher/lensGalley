@@ -288,6 +288,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
         }
 
         // Perform variable replacement for journal, issue, site info
+        if (!$referredPublication) $referredPublication = Repo::publication()->get($galley->getData('publicationId'));
         $issue = Repo::issue()->getBySubmissionId($referredPublication->getData('submissionId'));
 
         $journal = $request->getJournal();
