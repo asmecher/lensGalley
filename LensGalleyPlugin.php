@@ -336,7 +336,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                             null,
                             'article',
                             'view',
-                            $urlParts[1],
+                            [$urlParts[1]],
                             null,
                             $anchor
                         );
@@ -348,7 +348,7 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                             null,
                             'issue',
                             'view',
-                            $urlParts[1],
+                            [$urlParts[1]],
                             null,
                             $anchor
                         );
