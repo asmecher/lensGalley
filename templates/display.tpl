@@ -9,7 +9,22 @@
  *}
 <script src="{$jQueryUrl}"></script>
 <script src="{$pluginLensPath}/lens.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<script type="text/javascript">
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    options: {
+      menuOptions: {
+        settings: {
+          assistiveMml: true
+        }
+      }
+    }
+  };
+</script>
 <script type="text/javascript">{literal}
 
 	var linkElement = document.createElement("link");
