@@ -215,7 +215,15 @@ class LensGalleyPlugin extends \PKP\plugins\GenericPlugin
                     $issue = Repo::issue()->get($publication->getData('issueId'));
                     $issue = $issue->getJournalId() == $article->getData('contextId') ? $issue : null;
                 }
-                event(new UsageEvent(Application::ASSOC_TYPE_SUBMISSION_FILE, $request->getContext(), $article, $galley, $submissionFile, $issue));
+                event(new UsageEvent(
+                    assocType: Application::ASSOC_TYPE_SUBMISSION_FILE,
+                    context: $request->getContext(),
+                    submission: $article,
+                    galley: $galley,
+                    submissionFile: $submissionFile,
+                    issue: $issue,
+                    publication: $publication,
+                ));
             }
             return true;
         }
